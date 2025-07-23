@@ -1,39 +1,40 @@
 // Building a new specialized chatbot
 
-// Building a new specialized chatbot
+//const axios = require('axios');
 
-const axios = require('axios');
+const Groq = require('groq-sdk');
+
+const groq = new Groq({
+    apiKey: process.env.GROQ_API_KEY,
+})
 
 
 const niche = "bible history";
 
-async function askLLM(question) {
-    
-    const prompt = `
-You are an expert in ${niche}. Answer the following question strictly based on your knowledge of ${niche}. 
-If you don't know the answer, reply with "I don't know that yet."
+/**
+ * Ask the LLM a question and get its response.
+ *
+ * @param {string} question - The question to ask the LLM.
+ *
+ * @returns {string} The LLM's response to the question.
+ */
 
-Question: ${question}
-`;
+export async function askLLM(question) {
+    const prompt = ` You are an expert in ${niche}. 
+    Answer the following question strictly based on your knowledge of ${niche}. 
+    If you don't know the answer, reply with "I don't know that yet."
 
-    const response = await axios.post('LLM_API_ENDPOINT', {
-        prompt: prompt,
-        max_tokens: 200
-    }, {
-        headers: {
-            'Authorization': 'Bearer API_KEY'
-        }
-    });
+    Question: ${question}`;
 
-    // Extract and return the answer
-    return response.data.answer || "I don't know that yet.";
+    const response = await groq.chat.completions.create({
+        model: 'llama-3.3-70b-versatile',
+        messages: [
+            {
+                role: 'user',
+                content: prompt
+            }
+        ]
+    });   
+    return response.choices[0]?.message.content;
 }
 
-// Example usage
-async function main() {
-    const userQuestion = "Who was the father of Abraham?";
-    const answer = await askLLM(userQuestion);
-    console.log("Answer:", answer);
-}
-
-main();
