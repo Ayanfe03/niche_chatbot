@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const askLLM = require('./bot');
+const {askLLM} = require('./bot');
 
 router.post('/answer', async (req, res) => {
     try {

@@ -2,7 +2,10 @@
 
 //const axios = require('axios');
 
-const Groq = require('groq-sdk');
+const dotenv = require('dotenv');
+dotenv.config();
+
+const Groq = require("groq-sdk");
 
 const groq = new Groq({
     apiKey: process.env.GROQ_API_KEY,
@@ -19,7 +22,7 @@ const niche = "bible history";
  * @returns {string} The LLM's response to the question.
  */
 
-export async function askLLM(question) {
+const askLLM = async (question) => {
     const prompt = ` You are an expert in ${niche}. 
     Answer the following question strictly based on your knowledge of ${niche}. 
     If you don't know the answer, reply with "I don't know that yet."
@@ -38,3 +41,6 @@ export async function askLLM(question) {
     return response.choices[0]?.message.content;
 }
 
+module.exports = {
+    askLLM
+};

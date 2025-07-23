@@ -1,7 +1,7 @@
 {
   "name": "specialized_chatbot",
   "version": "1.0.0",
-  "main": "bot.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "llm": "nodemon src/server.js"
@@ -19,6 +19,9 @@
   "homepage": "https://github.com/Ayanfe03/niche_chatbot#readme",
   "description": "",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
     "groq-sdk": "^0.29.0"
   },
   "devDependencies": {
