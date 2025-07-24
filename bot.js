@@ -25,8 +25,10 @@ const niche = "bible history";
 const askLLM = async (question) => {
     const prompt = ` You are an expert in ${niche}. 
     Answer the following question strictly based on your knowledge of ${niche}. 
-    If you don't know the answer, reply with "I don't know that yet."
+    If you don't know the answer, reply with "I don't know how to help with that"
 
+    Format your answer in markdown format, using headings, bullet points, and code blocks as appropriate.
+    
     Question: ${question}`;
 
     const response = await groq.chat.completions.create({

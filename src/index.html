@@ -115,7 +115,41 @@
             font-weight: 600;
             letter-spacing: 1px;
         }
+        /* Markdown styling for bot bubbles */
+        .bot h1, .bot h2, .bot h3, .bot h4, .bot h5, .bot h6 {
+            margin: 0.5em 0 0.2em 0;
+            font-weight: bold;
+        }
+        .bot ul, .bot ol {
+            margin: 0.5em 0 0.5em 1.5em;
+        }
+        .bot code {
+            background: #f4f4f4;
+            color: #c7254e;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+        .bot pre {
+            background: #222;
+            color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        .bot strong {
+            font-weight: bold;
+        }
+        .bot em {
+            font-style: italic;
+        }
+        .bot a {
+            color: #19c37d;
+            text-decoration: underline;
+        }
     </style>
+    <!-- Add marked.js for Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div id="chat">
@@ -164,14 +198,14 @@
                 });
                 const data = await res.json();
 
-                // Replace loading with bot answer
-                loadingBubble.textContent = data.answer || "Sorry, no answer.";
+                // Replace loading with bot answer (rendered as Markdown)
+                loadingBubble.innerHTML = marked.parse(data.answer || "Sorry, no answer.");
                 messages.scrollTop = messages.scrollHeight;
             } catch (err) {
                 loadingBubble.textContent = "Error contacting server.";
                 messages.scrollTop = messages.scrollHeight;
             }
-        });  
+        });
     </script>
 </body>
-|</html>
+</html>
